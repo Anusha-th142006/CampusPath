@@ -22,6 +22,4 @@ def topological_sort(graph):
 
             dfs(course)
 
-    stack.reverse()
-
     return stack
