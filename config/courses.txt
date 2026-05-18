@@ -1,0 +1,22 @@
+Programming:
+Math:
+Statistics: Math
+DSA: Programming
+DBMS: Programming
+OS: DSA
+CN: OS
+AI: DSA,Math
+ML: AI,Statistics
+Compiler Design: DSA
+Cloud Computing: OS,CN
+Cyber Security: OS,CN
+Big Data: DBMS
+Distributed Systems: OS,CN
+Data Mining: DBMS,Statistics
+Blockchain: Cyber Security
+IoT: CN
+Software Engineering: Programming
+Web Development: Programming
+Mobile App Dev: Programming
+Computer Graphics: Math
+AR/VR: Computer Graphics
