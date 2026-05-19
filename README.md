@@ -1,26 +1,37 @@
 # CampusPath: Smart Course Prerequisite Planner
 
 ## Description
-CampusPath is a DFS-based course prerequisite planner that generates a valid course completion order using Topological Sort.
 
-The project also demonstrates Operating System synchronization concepts using Python threading and mutex locks.
+CampusPath is a smart prerequisite planner
+that helps students register for valid courses
+based on prerequisite dependencies.
+
+The project combines:
+- DAA Concepts
+- Operating System Synchronization Concepts
 
 ---
 
 ## Features
+
 - DFS-based Topological Sort
 - Cycle Detection
-- Personalized Remaining Plan
+- Student Registration
+- Available Course Prediction
+- Personalized Remaining Course Plan
 - Semester-wise Planning
 - Race Condition Demonstration
-- Synchronization using Locks
+- Synchronization using Mutex Locks
 
 ---
 
 ## Technologies Used
+
 - Python
+- DFS Algorithm
 - Threading Module
-- GitHub
+- Mutex Lock
+- Git & GitHub
 
 ---
 
@@ -28,8 +39,3 @@ The project also demonstrates Operating System synchronization concepts using Py
 
 ```bash
 python main.py
-
-## Team Members
-
-- Member 1 → DAA Modules
-- Member 2 → OS Synchronization Modules

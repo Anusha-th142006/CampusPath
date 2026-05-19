@@ -1,0 +1,147 @@
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    font-family: Arial, sans-serif;
+
+    background: linear-gradient(
+        to right,
+        #0f172a,
+        #1e293b
+    );
+
+    color: white;
+}
+
+.container {
+
+    width: 85%;
+
+    margin: auto;
+
+    padding: 20px;
+}
+
+h1 {
+
+    text-align: center;
+
+    color: cyan;
+
+    font-size: 50px;
+}
+
+h2 {
+
+    text-align: center;
+}
+
+.card {
+
+    background: #1e293b;
+
+    padding: 20px;
+
+    margin-top: 20px;
+
+    border-radius: 10px;
+
+    box-shadow: 0px 0px 10px black;
+}
+
+.course-list {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.course-list span {
+
+    background: cyan;
+
+    color: black;
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    font-weight: bold;
+}
+
+input,
+textarea {
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-top: 10px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    box-sizing: border-box;
+}
+
+textarea {
+
+    height: 100px;
+}
+
+button {
+
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: cyan;
+
+    color: black;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+button:hover {
+
+    background: white;
+}
+
+.output-card {
+
+    background: #1e293b;
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    border-radius: 10px;
+}
+
+.semester {
+
+    background: #334155;
+
+    padding: 15px;
+
+    margin-top: 10px;
+
+    border-radius: 10px;
+}

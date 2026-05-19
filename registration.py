@@ -12,17 +12,17 @@ def register_without_lock(student):
 
     if seats > 0:
 
-        print(f"{student} is registering...")
+        print(f"\n{student['name']} is registering...")
 
         time.sleep(1)
 
         seats -= 1
 
-        print(f"{student} registered.")
+        print(f"{student['name']} registered successfully.")
 
     else:
 
-        print(f"{student} failed.")
+        print(f"{student['name']} failed to register.")
 
 
 def register_with_lock(student):
@@ -33,49 +33,141 @@ def register_with_lock(student):
 
         if seats > 0:
 
-            print(f"{student} is registering...")
+            print(f"\n{student['name']} is registering...")
 
             time.sleep(1)
 
             seats -= 1
 
-            print(f"{student} registered.")
+            print(f"{student['name']} registered successfully.")
 
         else:
 
-            print(f"{student} failed.")
+            print(f"{student['name']} failed to register.")
 
 
-def run_registration_demo():
+def take_student_input(valid_courses):
+
+    print("\n===== STUDENT REGISTRATION =====")
+
+    total_students = int(
+        input("\nEnter number of students registering: ")
+    )
+
+    students = []
+
+    for i in range(total_students):
+
+        print(f"\n===== ENTER DETAILS FOR STUDENT {i+1} =====")
+
+        name = input("Enter Name: ")
+
+        usn = input("Enter USN: ")
+
+        branch = input("Enter Branch: ")
+
+        semester = input("Enter Current Semester: ")
+
+        completed = input(
+            "\nEnter completed courses separated by comma: "
+        )
+
+        entered_courses = [
+            x.strip()
+            for x in completed.split(",")
+            if x.strip()
+        ]
+
+        completed_courses = []
+
+        for course in entered_courses:
+
+            matched = False
+
+            for valid in valid_courses:
+
+                if course.lower() == valid.lower():
+
+                    completed_courses.append(valid)
+
+                    matched = True
+                    break
+
+            if not matched:
+
+                print(f"\nERROR: '{course}' is not valid.")
+
+                return take_student_input(valid_courses)
+
+        student = {
+
+            "name": name,
+            "usn": usn,
+            "branch": branch,
+            "semester": semester,
+            "completed": completed_courses
+        }
+
+        students.append(student)
+
+    return students
+
+
+def synchronization_demo(students):
 
     global seats
 
-    print("\nWITHOUT SYNCHRONIZATION")
+    if len(students) == 1:
+
+        print("\nOnly one student registering.")
+        print("Synchronization not required.")
+
+        return
+
+    print("\n===== MULTIPLE STUDENTS DETECTED =====")
+
+    print("\n===== WITHOUT SYNCHRONIZATION =====")
 
     seats = 1
 
-    t1 = threading.Thread(target=register_without_lock, args=("Student A",))
-    t2 = threading.Thread(target=register_without_lock, args=("Student B",))
+    threads = []
 
-    t1.start()
-    t2.start()
+    for student in students:
 
-    t1.join()
-    t2.join()
+        t = threading.Thread(
+            target=register_without_lock,
+            args=(student,)
+        )
 
-    print("Remaining Seats:", seats)
+        threads.append(t)
 
-    print("\nWITH SYNCHRONIZATION")
+        t.start()
+
+    for t in threads:
+
+        t.join()
+
+    print("\nRemaining Seats:", seats)
+
+    print("\n===== WITH SYNCHRONIZATION =====")
 
     seats = 1
 
-    t3 = threading.Thread(target=register_with_lock, args=("Student A",))
-    t4 = threading.Thread(target=register_with_lock, args=("Student B",))
+    threads = []
 
-    t3.start()
-    t4.start()
+    for student in students:
 
-    t3.join()
-    t4.join()
+        t = threading.Thread(
+            target=register_with_lock,
+            args=(student,)
+        )
 
-    print("Remaining Seats:", seats)
+        threads.append(t)
+
+        t.start()
+
+    for t in threads:
+
+        t.join()
+
+    print("\nRemaining Seats:", seats)

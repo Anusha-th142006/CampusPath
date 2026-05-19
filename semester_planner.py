@@ -1,11 +1,21 @@
-def semester_plan(course_order, max_courses=4):
+def semester_plan(courses, limit):
 
     semesters = []
 
-    for i in range(0, len(course_order), max_courses):
+    temp = []
 
-        semester = course_order[i:i + max_courses]
+    for course in courses:
 
-        semesters.append(semester)
+        temp.append(course)
+
+        if len(temp) == limit:
+
+            semesters.append(temp)
+
+            temp = []
+
+    if temp:
+
+        semesters.append(temp)
 
     return semesters

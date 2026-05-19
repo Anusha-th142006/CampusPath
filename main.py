@@ -1,67 +1,149 @@
-from graph import load_graph, display_graph
+from graph import (
+    load_graph,
+    display_all_courses,
+    available_courses,
+    get_all_completed
+)
+
 from cycle_detection import detect_cycle
+
 from topo_sort import topological_sort
-from registration import run_registration_demo
+
 from semester_planner import semester_plan
+
+from registration import (
+    take_student_input,
+    synchronization_demo
+)
 
 
 def main():
 
-    print("=" * 60)
+    print("=" * 70)
     print("CAMPUSPATH: SMART COURSE PREREQUISITE PLANNER")
-    print("=" * 60)
+    print("=" * 70)
 
     graph = load_graph("config/courses.txt")
-    print(f"\nTotal Courses Loaded: {len(graph)}")
-
-    display_graph(graph)
-
-    print("\nChecking for cycles...\n")
 
     if detect_cycle(graph):
 
-        print("ERROR: Invalid course configuration detected due to cyclic dependencies.")
+        print("\nERROR: Cycle detected!")
 
         return
 
-    print("No cycles found.\n")
+    all_courses = list(graph.keys())
 
-    order = topological_sort(graph)
+    print(f"\nTotal Courses Loaded: {len(graph)}")
 
-    print("Valid Course Order:\n")
+    display_all_courses(graph)
 
-    for i, course in enumerate(order, 1):
+    students = take_student_input(all_courses)
 
-        print(f"{i}. {course}")
+    topo_order = topological_sort(graph)
 
-    completed = input("\nEnter completed courses: ")
+    for student in students:
 
-    completed_courses = [x.strip() for x in completed.split(",")]
+        print("\n" + "=" * 70)
 
-    remaining = [c for c in order if c not in completed_courses]
+        print(f"STUDENT NAME : {student['name']}")
+        print(f"USN          : {student['usn']}")
+        print(f"BRANCH       : {student['branch']}")
+        print(f"SEMESTER     : {student['semester']}")
 
-    print("\nRemaining Courses:\n")
+        # AUTO COMPLETE PREREQUISITES
 
-    for course in remaining:
+        completed = get_all_completed(
+            graph,
+            student["completed"]
+        )
 
-        print(course)
+        print("\n===== COMPLETED COURSES =====\n")
 
-    limit = int(input("\nEnter maximum courses per semester: "))
+        if completed:
 
-    semesters = semester_plan(remaining, limit)
-    print("\n===== SEMESTER PLAN =====\n")
+            for c in completed:
 
-    for i, semester in enumerate(semesters, 1):
+                print("•", c)
 
-        print(f"Semester {i}")
+        else:
 
-        for course in semester:
+            print("None")
 
-            print("-", course)
+        # AVAILABLE COURSES
 
-        print()
+        available = available_courses(
+            graph,
+            completed
+        )
 
-    run_registration_demo()
+        print(
+            "\n===== AVAILABLE COURSES "
+            "FOR REGISTRATION =====\n"
+        )
+
+        if available:
+
+            for c in available:
+
+                print("-", c)
+
+        else:
+
+            print("No available courses.")
+
+        # STUDENT-SPECIFIC REMAINING COURSES
+
+        remaining = []
+
+        for c in topo_order:
+
+            if c not in completed:
+
+                remaining.append(c)
+
+        print(
+            "\n===== VALID FUTURE COURSE ORDER =====\n"
+        )
+
+        for i, c in enumerate(remaining, 1):
+
+            print(f"{i}. {c}")
+
+        # STUDENT-SPECIFIC SEMESTER PLAN
+
+        limit = int(
+
+            input(
+                f"\nEnter max courses per semester "
+                f"for {student['name']}: "
+            )
+        )
+
+        semesters = semester_plan(
+            remaining,
+            limit
+        )
+
+        print(
+            f"\n===== FUTURE SEMESTER PLAN "
+            f"FOR {student['name']} =====\n"
+        )
+
+        for sem_no, sem in enumerate(semesters, 1):
+
+            print(f"Semester {sem_no}")
+
+            for c in sem:
+
+                print("  •", c)
+
+            print()
+
+    print("\n===== REGISTRATION PROCESS =====")
+
+    synchronization_demo(students)
+
+    print("\nProject Completed Successfully.")
 
 
 if __name__ == "__main__":

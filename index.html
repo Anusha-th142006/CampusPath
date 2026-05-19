@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CampusPath</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>CampusPath</h1>
+
+        <h2>Smart Course Prerequisite Planner</h2>
+
+        <div class="card">
+
+            <h3>Available Courses</h3>
+
+            <div id="courseList"
+                 class="course-list">
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Total Students</h3>
+
+            <input type="number"
+                   id="studentCount"
+                   placeholder="Enter Number of Students">
+
+            <button onclick="createStudentForms()">
+                Create Student Forms
+            </button>
+
+        </div>
+
+        <div id="studentForms"></div>
+
+        <div id="output"></div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

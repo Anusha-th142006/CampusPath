@@ -8,11 +8,11 @@ def topological_sort(graph):
 
         visited.add(node)
 
-        for neighbor in graph[node]:
+        for prereq in graph[node]:
 
-            if neighbor not in visited:
+            if prereq not in visited:
 
-                dfs(neighbor)
+                dfs(prereq)
 
         stack.append(node)
 
